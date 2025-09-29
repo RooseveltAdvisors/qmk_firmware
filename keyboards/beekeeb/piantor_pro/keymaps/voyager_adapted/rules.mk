@@ -6,3 +6,4 @@ REPEAT_KEY_ENABLE = yes
 
 # Additional features for comprehensive functionality
 CAPS_WORD_ENABLE = yes
+MOUSEKEY_ENABLE = yes

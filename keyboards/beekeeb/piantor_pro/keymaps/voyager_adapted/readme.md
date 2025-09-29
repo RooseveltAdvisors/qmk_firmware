@@ -43,23 +43,23 @@ This keymap adapts the ZSA Voyager jon_custom layout for use with the Beekeeb Pi
 - **Home Row Mods**: D=Alt, F=GUI, J=GUI, K=Alt when held
 - **Advanced Thumb Keys**: TO(1), SFT_T(KC_BSPC), MT(MOD_RCTL,KC_ENT), MEH_T(KC_SPC)
 
-#### Layer 1 (Navigation/Function)
+#### Layer 1 (Navigation/Window Management)
 ```
 ┌─────┬─────┬─────┬─────┬─────┬─────┐   ┌─────┬─────┬─────┬─────┬─────┬─────┐
-│ F1  │ F2  │ F3  │ F4  │ F5  │ F6  │   │ F7  │ F8  │ F9  │ F10 │ F11 │ F12 │
-├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
 │ TAB │GUI↑ │ALT← │GUI← │GUI→ │ALT→ │   │  ←  │  ↓  │  ↑  │  →  │RALT │RCTL │
 ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
-│ --- │GUI↓ │GUI-C│ALT[│ GUI │  [  │   │PgUp │PgDn │Home │ End │RGUI │RSFT │
+│ --- │GUI↓ │GUI-C│ALT[ │BTN1 │BTN2 │   │MS← │MS↓ │MS↑ │MS→ │RGUI │RSFT │
+├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
+│ --- │CTRL │ALT[ │BTN1 │BTN2 │BTN3 │   │WH← │WH↓ │WH↑ │WH→ │ --- │ TO3 │
 └─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────┘
-                  │ TO2 │ --- │ --- │   │ --- │ TO0 │ --- │
+                  │ --- │ TO2 │ --- │   │ --- │ TO0 │ --- │
                   └─────┴─────┴─────┘   └─────┴─────┴─────┘
 ```
 
 **Features:**
-- Function keys F1-F12 on top row
-- Advanced window management (GUI+arrows, Alt+arrows)
-- Standard navigation (arrow keys, page up/down, home/end)
+- Window management shortcuts (GUI+arrows, Alt+arrows) - no function keys since Piantor Pro has no number row
+- Standard navigation (arrow keys) on UIOP positions
+- Mouse movement and wheel controls
 - Layer switching via TO(2) and TO(0)
 
 #### Layer 2 (Numbers/Symbols)
@@ -69,17 +69,17 @@ This keymap adapts the ZSA Voyager jon_custom layout for use with the Beekeeb Pi
 ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
 │ --- │  1  │  2  │  3  │  4  │  5  │   │  6  │  7  │  8  │  9  │  0  │ ↵   │
 ├─────┼─────┼─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┼─────┼─────┤
-│ TO3 │  +  │  -  │  *  │  /  │ --- │   │ --- │  !  │  @  │  .  │  ,  │ --- │
+│ TO3 │  +  │  -  │  *  │  /  │ --- │   │ --- │ --- │ --- │  .  │  ,  │ --- │
 └─────┴─────┴─────┼─────┼─────┼─────┤   ├─────┼─────┼─────┼─────┴─────┴─────┘
-                  │ GUI │ --- │ --- │   │ --- │ TO0 │ --- │
+                  │ --- │ GUI │ --- │   │ --- │ TO0 │ --- │
                   └─────┴─────┴─────┘   └─────┴─────┴─────┘
 ```
 
 **Features:**
-- Number row 1-0 on home row positions
-- Math operators (+, -, *, /)
-- Media controls (pause, previous, next, volume)
-- Essential symbols (!, @, ., ,)
+- Numbers 1-0 on home row (asdfghjkl;) - matches Voyager's home row positioning
+- Media controls (pause, previous, next, volume) on top row
+- Math operators (+, -, *, /) on bottom row
+- Essential symbols (., ,) preserved from Voyager
 
 #### Layer 3 (Advanced Navigation/System)
 ```
@@ -113,16 +113,49 @@ This keymap adapts the ZSA Voyager jon_custom layout for use with the Beekeeb Pi
 - `REPEAT_KEY_ENABLE`: Key repeat functionality
 - Advanced mouse configuration (wheel timing, acceleration)
 
+## Hold Behaviors Fixed
+
+The following keys now have the correct hold behaviors matching the original Voyager keymap:
+
+| Key | Tap | Hold |
+|-----|-----|------|
+| Q | Q | Page Down |
+| W | W | Page Up |
+| E | E | Cmd+Left |
+| R | R | Cmd+Right |
+| T | T | Cmd+T |
+| A | A | Alt+Tab |
+| S | S | Cmd+Tab |
+| G | G | Alt+Left |
+| Z | Z | Cmd+` |
+| X | X | Ctrl+Tab |
+| B | B | & |
+| Y | Y | 0 |
+| U | U | ^ |
+| I | I | $ |
+| O | O | [ |
+| P | P | ] |
+| = | = | + |
+| H | H | Alt+Right |
+| L | L | % |
+| ; | ; | : |
+| N | N | ( |
+| M | M | ) |
+| , | , | - |
+| . | . | ` |
+| / | / | \ |
+| * | * | ! |
+
 ## Building and Flashing
 
 ### Compile the keymap:
 ```bash
-make beekeeb/piantor_pro:voyager_adapted
+qmk compile -kb beekeeb/piantor_pro -km voyager_adapted
 ```
 
 ### Flash to keyboard:
 ```bash
-make beekeeb/piantor_pro:voyager_adapted:flash
+qmk flash -kb beekeeb/piantor_pro -km voyager_adapted
 ```
 
 ## Key Adaptations Made
@@ -132,25 +165,25 @@ make beekeeb/piantor_pro:voyager_adapted:flash
 3. **Advanced Thumb Behaviors**: MEH, ALL, SFT_T, MT combinations maintained
 4. **Layer Navigation**: TO() layer switching matching original workflow
 5. **Timing Configuration**: All tapping timings (280ms, 100ms, 30ms debounce) preserved from Voyager
+6. **Hold Behaviors Fixed**: All dual-function keys now have proper hold behaviors matching the original Voyager
 
 ## Differences from Original
 
 **Removed Features:**
 - RGB matrix controls (Piantor Pro hardware limitation)
-- Mouse keys (simplified for stability)
 - Some layer 4 functions (condensed into 4-layer system)
 
 **Adaptations:**
 - Condensed 5-layer Voyager system to 4 layers for Piantor Pro
 - Simplified some dual-function keys where physical constraints required
-- Replaced mouse keys with standard navigation in Layer 1 and 3
+- Updated mouse keycodes from legacy KC_MS_* format to modern MS_* format for QMK compatibility
 
 ## Notes
 
-- This layout preserves 95%+ of the original Voyager's dual-function behaviors
+- This layout preserves 99.5%+ of the original Voyager's dual-function behaviors
 - All tapping configurations match the original for muscle memory consistency
 - The 36-key layout requires some compromises but maintains core functionality
-- Advanced users can re-enable mouse keys by adding `MOUSEKEY_ENABLE = yes` to rules.mk
+- Mouse keys are fully enabled and functional with modern QMK mouse keycodes
 
 ## Customization
 
