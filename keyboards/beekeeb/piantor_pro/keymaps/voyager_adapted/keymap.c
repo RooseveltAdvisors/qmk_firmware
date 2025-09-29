@@ -227,7 +227,22 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_8: // Z tap / LGUI(KC_GRAVE) hold
+        case DUAL_FUNC_8: // @ tap / # hold (bottom leftmost position)
+            if (record->tap.count > 0) {
+                if (record->event.pressed) {
+                    register_code16(KC_AT);
+                } else {
+                    unregister_code16(KC_AT);
+                }
+            } else {
+                if (record->event.pressed) {
+                    register_code16(KC_HASH);
+                } else {
+                    unregister_code16(KC_HASH);
+                }
+            }
+            return false;
+        case DUAL_FUNC_9: // Z tap / LGUI(KC_GRAVE) hold (from Voyager DUAL_FUNC_9)
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(KC_Z);
@@ -242,7 +257,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_9: // X tap / LCTL(KC_TAB) hold (from Voyager DUAL_FUNC_10)
+        case DUAL_FUNC_10: // X tap / LCTL(KC_TAB) hold (from Voyager DUAL_FUNC_10)
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(KC_X);
@@ -257,8 +272,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_10: // C tap / no special hold behavior
-            return true; // Let normal processing handle this
         case DUAL_FUNC_11: // B tap / KC_AMPR hold
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
