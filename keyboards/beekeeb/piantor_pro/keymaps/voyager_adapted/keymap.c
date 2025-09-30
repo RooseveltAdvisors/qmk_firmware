@@ -38,7 +38,7 @@
 #define DUAL_FUNC_30 LT(1, LGUI(KC_RIGHT))   // GUI+Right tap / GUI+Shift+Right hold
 #define DUAL_FUNC_31 LT(1, LALT(KC_RIGHT))   // Alt+Right tap / Alt+Shift+Right hold
 #define DUAL_FUNC_32 LT(1, LGUI(KC_DOWN))    // GUI+Down tap / GUI+Shift+Down hold
-#define DUAL_FUNC_33 LT(1, LGUI(KC_C))       // GUI+C tap / Layer 1 hold
+#define DUAL_FUNC_33 LT(1, KC_C)             // C / Layer 1 (tap=Cmd+C, hold=Cmd+V in process_record_user)
 #define DUAL_FUNC_34 LT(1, MT(MOD_LALT,KC_LBRC)) // Alt+[ tap / Layer 1 hold
 #define DUAL_FUNC_35 LT(1, MS_BTN1)          // Mouse Button 1 tap / Layer 1 hold
 #define DUAL_FUNC_36 LT(1, MS_BTN2)          // Mouse Button 2 tap / Layer 1 hold
@@ -54,9 +54,6 @@
 #define DUAL_FUNC_42 LT(3, KC_PGDN)          // Page Down tap / Page Up hold
 #define DUAL_FUNC_43 LT(3, KC_GRAVE)         // Grave tap / Ctrl+Grave hold
 
-// C key dual function: tap Command+C, hold Command+V (from Voyager DUAL_FUNC_33)
-#define DUAL_FUNC_44 LT(1, KC_C)             // C tap / Layer 1 hold (will be handled in process_record_user)
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
@@ -64,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
  ALL_T(KC_ESC), DUAL_FUNC_5, DUAL_FUNC_6, MT(MOD_LALT,KC_D), MT(MOD_LGUI,KC_F), DUAL_FUNC_7,    DUAL_FUNC_18, MT(MOD_RGUI,KC_J), MT(MOD_RALT,KC_K), DUAL_FUNC_19, DUAL_FUNC_20, MT(MOD_RSFT,KC_QUOTE),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      DUAL_FUNC_8, DUAL_FUNC_9, DUAL_FUNC_10, DUAL_FUNC_44, KC_V, DUAL_FUNC_11,         DUAL_FUNC_21, DUAL_FUNC_22, DUAL_FUNC_23, DUAL_FUNC_24, DUAL_FUNC_25, DUAL_FUNC_26,
+      DUAL_FUNC_8, DUAL_FUNC_9, DUAL_FUNC_10, KC_C, KC_V, DUAL_FUNC_11,         DUAL_FUNC_21, DUAL_FUNC_22, DUAL_FUNC_23, DUAL_FUNC_24, DUAL_FUNC_25, DUAL_FUNC_26,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_NO, TO(1), MT(MOD_LSFT,KC_BSPC),    MT(MOD_RCTL,KC_ENT), MEH_T(KC_SPC), KC_NO
                                       //`--------------------------'  `--------------------------'
@@ -515,7 +512,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_44: // C tap LGUI(KC_C) / hold LGUI(KC_V) (from Voyager DUAL_FUNC_33)
+        case DUAL_FUNC_33: // C tap LGUI(KC_C) / hold LGUI(KC_V) (from Voyager DUAL_FUNC_33)
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(LGUI(KC_C));
