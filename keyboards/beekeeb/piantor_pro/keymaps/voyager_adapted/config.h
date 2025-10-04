@@ -4,10 +4,11 @@
 #pragma once
 
 // Voyager-adapted tapping configuration
-#define FLOW_TAP_TERM 100
-#define CHORDAL_HOLD
+// Optimized for 20gf light switches and fast typing
+#define FLOW_TAP_TERM 150  // Increased from 100ms - disables holds during fast typing (community recommended: 150ms)
+#define CHORDAL_HOLD       // Opposite hands rule for home row mods
 #undef TAPPING_TERM
-#define TAPPING_TERM 280
+#define TAPPING_TERM 220   // Reduced from 280ms - optimal range with CHORDAL_HOLD (community recommended: 200-250ms)
 
 // Debounce configuration from Voyager
 #undef DEBOUNCE

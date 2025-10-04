@@ -104,6 +104,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     )
 };
 
+// Chordal Hold handedness matrix - implements "opposite hands" rule
+// 'L' = left hand, 'R' = right hand, '*' = exempt from rule
+// This enables Chordal Hold to prevent accidental modifiers during same-hand rolls
+const char chordal_hold_layout[MATRIX_ROWS][MATRIX_COLS] PROGMEM = LAYOUT_split_3x6_3(
+//  Left hand                                                Right hand
+    'L', 'L', 'L', 'L', 'L', 'L',                          'R', 'R', 'R', 'R', 'R', 'R',
+    'L', 'L', 'L', 'L', 'L', 'L',                          'R', 'R', 'R', 'R', 'R', 'R',
+    'L', 'L', 'L', 'L', 'L', 'L',                          'R', 'R', 'R', 'R', 'R', 'R',
+                   'L', 'L', 'L',                          'R', 'R', 'R'
+);
+
 // Process dual function keys with proper hold behaviors
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
