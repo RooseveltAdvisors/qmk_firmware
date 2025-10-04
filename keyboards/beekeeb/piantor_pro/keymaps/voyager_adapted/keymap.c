@@ -1,67 +1,72 @@
 #include QMK_KEYBOARD_H
 
-// Dual function key definitions adapted from ZSA Voyager jon_custom
-// Note: Voyager uses layers 1-15, adapting to Piantor Pro's 0-3 layers
-// Layer 0 keys - adapting complex Voyager layer assignments to 4-layer system
-#define DUAL_FUNC_0 LT(3, KC_Q)    // Q / Layer 3 (was LT(13, KC_F10))
-#define DUAL_FUNC_1 LT(2, KC_W)    // W / Layer 2 (was LT(5, KC_W))
-#define DUAL_FUNC_2 LT(3, KC_E)    // E / Layer 3 (was LT(15, KC_F20))
-#define DUAL_FUNC_3 LT(1, KC_R)    // R / Layer 1 (was LT(10, KC_F5))
-#define DUAL_FUNC_4 LT(3, KC_T)    // T / Layer 3 (was LT(3, KC_F4))
-#define DUAL_FUNC_5 LT(1, KC_A)    // A / Layer 1 (was LT(1, KC_F15))
-#define DUAL_FUNC_6 LT(2, KC_S)    // S / Layer 2 (was LT(9, KC_7))
-#define DUAL_FUNC_7 LT(3, KC_G)    // G / Layer 3 (was LT(14, KC_F10))
-#define DUAL_FUNC_8 LT(3, KC_Z)    // Z / Layer 3 (was LT(15, KC_L))
-#define DUAL_FUNC_9 LT(2, KC_X)    // X / Layer 2 (was LT(7, KC_2))
-#define DUAL_FUNC_10 LT(2, KC_C)   // C / Layer 2 (was LT(8, KC_G))
-#define DUAL_FUNC_11 LT(1, KC_B)   // B / Layer 1 (was LT(10, KC_0))
-#define DUAL_FUNC_12 LT(2, KC_Y)   // Y / Layer 2 (was LT(7, KC_F5))
-#define DUAL_FUNC_13 LT(3, KC_U)   // U / Layer 3 (was LT(13, KC_1))
-#define DUAL_FUNC_14 LT(2, KC_I)   // I / Layer 2 (was LT(5, KC_6))
-#define DUAL_FUNC_15 LT(3, KC_O)   // O / Layer 3 (was LT(3, KC_U))
-#define DUAL_FUNC_16 LT(2, KC_P)   // P / Layer 2 (was LT(9, KC_F2))
-#define DUAL_FUNC_17 LT(2, KC_EQUAL) // = / Layer 2 (was LT(2, KC_F8))
-#define DUAL_FUNC_18 LT(3, KC_H)   // H / Layer 3 (was LT(12, KC_U))
-#define DUAL_FUNC_19 LT(3, KC_L)   // L / Layer 3 (was LT(12, KC_B))
-#define DUAL_FUNC_20 LT(2, KC_SCLN) // ; / Layer 2 (was LT(5, KC_O))
-#define DUAL_FUNC_21 LT(2, KC_N)   // N / Layer 2 (was LT(2, KC_F5))
-#define DUAL_FUNC_22 LT(2, KC_M)   // M / Layer 2 (was LT(8, KC_M))
-#define DUAL_FUNC_23 LT(1, KC_COMMA) // , / Layer 1 (was LT(10, KC_F6))
-#define DUAL_FUNC_24 LT(2, KC_DOT) // . / Layer 2 (was LT(2, KC_F11))
-#define DUAL_FUNC_25 LT(3, KC_SLASH) // / / Layer 3 (was LT(14, KC_F22))
-#define DUAL_FUNC_26 LT(2, KC_BSLS) // \ / Layer 2 (was LT(8, KC_F7))
+// Custom dual-function keys using LT() with arbitrary unused keycodes
+// LT(0, keycode) enables tap/hold detection without layer switching
+#define C_LT LT(0, KC_F20)      // C tap / Ctrl+C hold
+#define V_LT LT(0, KC_F21)      // V tap / Ctrl+A hold
+#define QUOT_LT LT(0, KC_F22)   // ' tap / " hold
 
-// Layer 1 additional functions (from original Voyager)
-#define DUAL_FUNC_27 LT(1, LGUI(KC_UP))      // GUI+UP tap / GUI+Shift+UP hold
+// Dual function key definitions - Layer 0
+// LT() enables tap/hold detection, process_record_user defines actual behavior
+#define DUAL_FUNC_0 LT(3, KC_Q)    // Q tap / PgDn hold
+#define DUAL_FUNC_1 LT(2, KC_W)    // W tap / PgUp hold
+#define DUAL_FUNC_2 LT(3, KC_E)    // E tap / Cmd+Left hold
+#define DUAL_FUNC_3 LT(1, KC_R)    // R tap / Cmd+Right hold
+#define DUAL_FUNC_4 LT(3, KC_T)    // T tap / Cmd+T hold
+#define DUAL_FUNC_5 LT(1, KC_A)    // A tap / Alt+Tab hold
+#define DUAL_FUNC_6 LT(2, KC_S)    // S tap / Cmd+Tab hold
+#define DUAL_FUNC_7 LT(3, KC_G)    // G tap / Alt+Left hold
+#define DUAL_FUNC_8 LT(3, KC_AT)   // @ tap / # hold
+#define DUAL_FUNC_9 LT(2, KC_Z)    // Z tap / Cmd+` hold
+#define DUAL_FUNC_10 LT(2, KC_X)   // X tap / Ctrl+Tab hold
+#define DUAL_FUNC_11 LT(1, KC_B)   // B tap / & hold
+#define DUAL_FUNC_12 LT(2, KC_Y)   // Y tap / 0 hold
+#define DUAL_FUNC_13 LT(3, KC_U)   // U tap / ^ hold
+#define DUAL_FUNC_14 LT(2, KC_I)   // I tap / $ hold
+#define DUAL_FUNC_15 LT(3, KC_O)   // O tap / [ hold
+#define DUAL_FUNC_16 LT(2, KC_P)   // P tap / ] hold
+#define DUAL_FUNC_17 LT(2, KC_EQUAL) // = tap / + hold
+#define DUAL_FUNC_18 LT(3, KC_H)   // H tap / Alt+Right hold
+#define DUAL_FUNC_19 LT(3, KC_L)   // L tap / % hold
+#define DUAL_FUNC_20 LT(2, KC_SCLN) // ; tap / : hold
+#define DUAL_FUNC_21 LT(2, KC_N)   // N tap / ( hold
+#define DUAL_FUNC_22 LT(2, KC_M)   // M tap / ) hold
+#define DUAL_FUNC_23 LT(1, KC_COMMA) // , tap / - hold
+#define DUAL_FUNC_24 LT(2, KC_DOT) // . tap / ` hold
+#define DUAL_FUNC_25 LT(3, KC_SLASH) // / tap / \ hold
+#define DUAL_FUNC_26 LT(2, KC_ASTR) // * tap / ! hold
+
+// Layer 1 definitions
+#define DUAL_FUNC_27 LT(1, LGUI(KC_UP))      // Cmd+Up tap / Cmd+Shift+Up hold
 #define DUAL_FUNC_28 LT(1, LALT(KC_LEFT))    // Alt+Left tap / Alt+Ctrl+Left hold
-#define DUAL_FUNC_29 LT(1, LGUI(KC_LEFT))    // GUI+Left tap / GUI+Shift+Left hold
-#define DUAL_FUNC_30 LT(1, LGUI(KC_RIGHT))   // GUI+Right tap / GUI+Shift+Right hold
+#define DUAL_FUNC_29 LT(1, LGUI(KC_LEFT))    // Cmd+Left tap / Cmd+Shift+Left hold
+#define DUAL_FUNC_30 LT(1, LGUI(KC_RIGHT))   // Cmd+Right tap / Cmd+Shift+Right hold
 #define DUAL_FUNC_31 LT(1, LALT(KC_RIGHT))   // Alt+Right tap / Alt+Shift+Right hold
-#define DUAL_FUNC_32 LT(1, LGUI(KC_DOWN))    // GUI+Down tap / GUI+Shift+Down hold
-#define DUAL_FUNC_33 LT(1, KC_C)             // C / Layer 1 (tap=Cmd+C, hold=Cmd+V in process_record_user)
-#define DUAL_FUNC_34 LT(1, MT(MOD_LALT,KC_LBRC)) // Alt+[ tap / Layer 1 hold
-#define DUAL_FUNC_35 LT(1, MS_BTN1)          // Mouse Button 1 tap / Layer 1 hold
-#define DUAL_FUNC_36 LT(1, MS_BTN2)          // Mouse Button 2 tap / Layer 1 hold
+#define DUAL_FUNC_32 LT(1, LGUI(KC_DOWN))    // Cmd+Down tap / Cmd+Shift+Down hold
+#define DUAL_FUNC_33 LT(1, KC_C)             // Cmd+C tap / Cmd+V hold
+#define DUAL_FUNC_34 LT(1, MT(MOD_LALT,KC_LBRC)) // Alt+[ (simple LT, no custom handler)
+#define DUAL_FUNC_35 LT(1, MS_BTN1)          // Mouse Btn1 (simple LT, no custom handler)
+#define DUAL_FUNC_36 LT(1, MS_BTN2)          // Mouse Btn2 (simple LT, no custom handler)
 
-// Layer 2 additional functions
-#define DUAL_FUNC_37 LT(2, KC_PAUSE)         // Pause tap / Media Play/Pause hold
-#define DUAL_FUNC_38 LT(2, KC_BSPC)          // Backspace tap / GUI+Backspace hold
+// Layer 2 definitions
+#define DUAL_FUNC_37 LT(2, KC_PAUSE)         // Pause (simple LT, no custom handler)
+#define DUAL_FUNC_38 LT(2, KC_BSPC)          // Backspace (simple LT, no custom handler)
 
-// Layer 3 additional functions
-#define DUAL_FUNC_39 LT(3, KC_ESC)           // Escape tap / Alt+Ctrl+Escape hold
-#define DUAL_FUNC_40 LT(3, KC_TAB)           // Tab tap / Ctrl+Tab hold
-#define DUAL_FUNC_41 LT(3, KC_HOME)          // Home tap / End hold
-#define DUAL_FUNC_42 LT(3, KC_PGDN)          // Page Down tap / Page Up hold
-#define DUAL_FUNC_43 LT(3, KC_GRAVE)         // Grave tap / Ctrl+Grave hold
+// Layer 3 definitions
+#define DUAL_FUNC_39 LT(3, KC_ESC)           // Escape (simple LT, no custom handler)
+#define DUAL_FUNC_40 LT(3, KC_TAB)           // Tab (simple LT, no custom handler)
+#define DUAL_FUNC_41 LT(3, KC_HOME)          // Home (simple LT, no custom handler)
+#define DUAL_FUNC_42 LT(3, KC_PGDN)          // Page Down (simple LT, no custom handler)
+#define DUAL_FUNC_43 LT(3, KC_GRAVE)         // Grave (simple LT, no custom handler)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [0] = LAYOUT_split_3x6_3(
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        MEH_T(KC_TAB), DUAL_FUNC_0, DUAL_FUNC_1, DUAL_FUNC_2, DUAL_FUNC_3, DUAL_FUNC_4,    DUAL_FUNC_12, DUAL_FUNC_13, DUAL_FUNC_14, DUAL_FUNC_15, DUAL_FUNC_16, DUAL_FUNC_17,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
- ALL_T(KC_ESC), DUAL_FUNC_5, DUAL_FUNC_6, MT(MOD_LALT,KC_D), MT(MOD_LGUI,KC_F), DUAL_FUNC_7,    DUAL_FUNC_18, MT(MOD_RGUI,KC_J), MT(MOD_RALT,KC_K), DUAL_FUNC_19, DUAL_FUNC_20, MT(MOD_RSFT,KC_QUOTE),
+ ALL_T(KC_ESC), DUAL_FUNC_5, DUAL_FUNC_6, MT(MOD_LALT,KC_D), MT(MOD_LGUI,KC_F), DUAL_FUNC_7,    DUAL_FUNC_18, MT(MOD_RGUI,KC_J), MT(MOD_RALT,KC_K), DUAL_FUNC_19, DUAL_FUNC_20, QUOT_LT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      DUAL_FUNC_8, DUAL_FUNC_9, DUAL_FUNC_10, KC_C, KC_V, DUAL_FUNC_11,         DUAL_FUNC_21, DUAL_FUNC_22, DUAL_FUNC_23, DUAL_FUNC_24, DUAL_FUNC_25, DUAL_FUNC_26,
+      DUAL_FUNC_8, DUAL_FUNC_9, DUAL_FUNC_10, C_LT, V_LT, DUAL_FUNC_11,         DUAL_FUNC_21, DUAL_FUNC_22, DUAL_FUNC_23, DUAL_FUNC_24, DUAL_FUNC_25, DUAL_FUNC_26,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_NO, TO(1), MT(MOD_LSFT,KC_BSPC),    MT(MOD_RCTL,KC_ENT), MEH_T(KC_SPC), KC_NO
                                       //`--------------------------'  `--------------------------'
@@ -238,7 +243,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_8: // @ tap / # hold (bottom leftmost position)
+        case DUAL_FUNC_8: // @ tap / # hold
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(KC_AT);
@@ -253,7 +258,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_9: // Z tap / LGUI(KC_GRAVE) hold (from Voyager DUAL_FUNC_9)
+        case DUAL_FUNC_9: // Z tap / Cmd+` hold
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(KC_Z);
@@ -268,7 +273,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_10: // X tap / LCTL(KC_TAB) hold (from Voyager DUAL_FUNC_10)
+        case DUAL_FUNC_10: // X tap / Ctrl+Tab hold
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(KC_X);
@@ -508,7 +513,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_26: // * tap / ! hold (from Voyager line 580+)
+        case DUAL_FUNC_26: // * tap / ! hold
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(KC_ASTR);
@@ -523,7 +528,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case DUAL_FUNC_33: // C tap LGUI(KC_C) / hold LGUI(KC_V) (from Voyager DUAL_FUNC_33)
+        case DUAL_FUNC_33: // Cmd+C tap / Cmd+V hold
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(LGUI(KC_C));
@@ -535,6 +540,51 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                     register_code16(LGUI(KC_V));
                 } else {
                     unregister_code16(LGUI(KC_V));
+                }
+            }
+            return false;
+        case C_LT: // C tap / Ctrl+C hold
+            if (record->tap.count > 0) {
+                if (record->event.pressed) {
+                    register_code16(KC_C);
+                } else {
+                    unregister_code16(KC_C);
+                }
+            } else {
+                if (record->event.pressed) {
+                    register_code16(LCTL(KC_C));
+                } else {
+                    unregister_code16(LCTL(KC_C));
+                }
+            }
+            return false;
+        case V_LT: // V tap / Ctrl+A hold
+            if (record->tap.count > 0) {
+                if (record->event.pressed) {
+                    register_code16(KC_V);
+                } else {
+                    unregister_code16(KC_V);
+                }
+            } else {
+                if (record->event.pressed) {
+                    register_code16(LCTL(KC_A));
+                } else {
+                    unregister_code16(LCTL(KC_A));
+                }
+            }
+            return false;
+        case QUOT_LT: // ' tap / " hold
+            if (record->tap.count > 0) {
+                if (record->event.pressed) {
+                    register_code16(KC_QUOTE);
+                } else {
+                    unregister_code16(KC_QUOTE);
+                }
+            } else {
+                if (record->event.pressed) {
+                    register_code16(KC_DQUO);
+                } else {
+                    unregister_code16(KC_DQUO);
                 }
             }
             return false;

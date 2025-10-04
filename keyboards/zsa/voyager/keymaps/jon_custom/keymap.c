@@ -832,7 +832,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         }  
       }  
       return false;
-    case DUAL_FUNC_43:
+    case DUAL_FUNC_46:
       if (record->tap.count > 0) {
         if (record->event.pressed) {
           register_code16(KC_GRAVE);
