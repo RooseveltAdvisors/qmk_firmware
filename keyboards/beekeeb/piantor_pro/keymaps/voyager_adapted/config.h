@@ -4,11 +4,12 @@
 #pragma once
 
 // Voyager-adapted tapping configuration
-// Optimized for 20gf light switches and fast typing
-#define FLOW_TAP_TERM 150  // Increased from 100ms - disables holds during fast typing (community recommended: 150ms)
+// Optimized for 20gf light switches and fast typing at 74 WPM
+#define FLOW_TAP_TERM 150  // Disables holds when next key pressed within 150ms
 #define CHORDAL_HOLD       // Opposite hands rule for home row mods
 #undef TAPPING_TERM
-#define TAPPING_TERM 220   // Reduced from 280ms - optimal range with CHORDAL_HOLD (community recommended: 200-250ms)
+#define TAPPING_TERM 250   // Hold activation threshold (community recommended: 200-250ms)
+#define QUICK_TAP_TERM 120 // Force tap if same key pressed within 120ms (prevents hold during fast double-taps)
 
 // Debounce configuration from Voyager
 #undef DEBOUNCE
@@ -44,5 +45,4 @@
 #undef MOUSEKEY_WHEEL_TIME_TO_MAX
 #define MOUSEKEY_WHEEL_TIME_TO_MAX 60
 
-// Enable mod-tap functionality
-#define PERMISSIVE_HOLD
+// PERMISSIVE_HOLD removed - was causing hold triggers during fast overlapping key presses (74 WPM typing)
