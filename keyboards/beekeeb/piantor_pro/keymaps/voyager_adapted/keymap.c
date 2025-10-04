@@ -1,10 +1,10 @@
 #include QMK_KEYBOARD_H
 
-// Custom dual-function keys using LT() with arbitrary unused keycodes
+// Custom dual-function keys using LT() - consistent with other DUAL_FUNC keys
 // LT(0, keycode) enables tap/hold detection without layer switching
-#define C_LT LT(0, KC_F20)      // C tap / Ctrl+C hold
-#define V_LT LT(0, KC_F21)      // V tap / Ctrl+A hold
-#define QUOT_LT LT(0, KC_F22)   // ' tap / " hold
+#define DUAL_FUNC_C LT(0, KC_F20)      // C tap / Ctrl+C hold
+#define DUAL_FUNC_V LT(0, KC_F21)      // V tap / Ctrl+A hold
+#define DUAL_FUNC_QUOT LT(0, KC_F22)   // ' tap / " hold
 
 // Dual function key definitions - Layer 0
 // LT() enables tap/hold detection, process_record_user defines actual behavior
@@ -64,9 +64,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        MEH_T(KC_TAB), DUAL_FUNC_0, DUAL_FUNC_1, DUAL_FUNC_2, DUAL_FUNC_3, DUAL_FUNC_4,    DUAL_FUNC_12, DUAL_FUNC_13, DUAL_FUNC_14, DUAL_FUNC_15, DUAL_FUNC_16, DUAL_FUNC_17,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
- ALL_T(KC_ESC), DUAL_FUNC_5, DUAL_FUNC_6, MT(MOD_LALT,KC_D), MT(MOD_LGUI,KC_F), DUAL_FUNC_7,    DUAL_FUNC_18, MT(MOD_RGUI,KC_J), MT(MOD_RALT,KC_K), DUAL_FUNC_19, DUAL_FUNC_20, QUOT_LT,
+ ALL_T(KC_ESC), DUAL_FUNC_5, DUAL_FUNC_6, MT(MOD_LALT,KC_D), MT(MOD_LGUI,KC_F), DUAL_FUNC_7,    DUAL_FUNC_18, MT(MOD_RGUI,KC_J), MT(MOD_RALT,KC_K), DUAL_FUNC_19, DUAL_FUNC_20, DUAL_FUNC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      DUAL_FUNC_8, DUAL_FUNC_9, DUAL_FUNC_10, C_LT, V_LT, DUAL_FUNC_11,         DUAL_FUNC_21, DUAL_FUNC_22, DUAL_FUNC_23, DUAL_FUNC_24, DUAL_FUNC_25, DUAL_FUNC_26,
+      DUAL_FUNC_8, DUAL_FUNC_9, DUAL_FUNC_10, DUAL_FUNC_C, DUAL_FUNC_V, DUAL_FUNC_11,         DUAL_FUNC_21, DUAL_FUNC_22, DUAL_FUNC_23, DUAL_FUNC_24, DUAL_FUNC_25, DUAL_FUNC_26,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_NO, TO(1), MT(MOD_LSFT,KC_BSPC),    MT(MOD_RCTL,KC_ENT), MEH_T(KC_SPC), KC_NO
                                       //`--------------------------'  `--------------------------'
@@ -543,37 +543,57 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
             }
             return false;
-        case C_LT: // C tap / Ctrl+C hold
-            if (record->tap.count > 0) {
-                if (record->event.pressed) {
-                    register_code16(KC_C);
+        case DUAL_FUNC_C: // C tap / Ctrl+C hold (with over-trigger protection)
+            {
+                static bool c_hold_active = false;
+                if (record->tap.count > 0) {
+                    // Tap behavior: normal C key
+                    if (record->event.pressed) {
+                        register_code16(KC_C);
+                    } else {
+                        unregister_code16(KC_C);
+                    }
                 } else {
-                    unregister_code16(KC_C);
-                }
-            } else {
-                if (record->event.pressed) {
-                    register_code16(LCTL(KC_C));
-                } else {
-                    unregister_code16(LCTL(KC_C));
-                }
-            }
-            return false;
-        case V_LT: // V tap / Ctrl+A hold
-            if (record->tap.count > 0) {
-                if (record->event.pressed) {
-                    register_code16(KC_V);
-                } else {
-                    unregister_code16(KC_V);
-                }
-            } else {
-                if (record->event.pressed) {
-                    register_code16(LCTL(KC_A));
-                } else {
-                    unregister_code16(LCTL(KC_A));
+                    // Hold behavior: Ctrl+C (send only once, prevent key repeat over-trigger)
+                    if (record->event.pressed) {
+                        if (!c_hold_active) {
+                            register_code16(LCTL(KC_C));
+                            c_hold_active = true;
+                        }
+                        // Ignore key repeat events when hold is already active
+                    } else {
+                        unregister_code16(LCTL(KC_C));
+                        c_hold_active = false;
+                    }
                 }
             }
             return false;
-        case QUOT_LT: // ' tap / " hold
+        case DUAL_FUNC_V: // V tap / Ctrl+A hold (with over-trigger protection)
+            {
+                static bool v_hold_active = false;
+                if (record->tap.count > 0) {
+                    // Tap behavior: normal V key
+                    if (record->event.pressed) {
+                        register_code16(KC_V);
+                    } else {
+                        unregister_code16(KC_V);
+                    }
+                } else {
+                    // Hold behavior: Ctrl+A (send only once, prevent key repeat over-trigger)
+                    if (record->event.pressed) {
+                        if (!v_hold_active) {
+                            register_code16(LCTL(KC_A));
+                            v_hold_active = true;
+                        }
+                        // Ignore key repeat events when hold is already active
+                    } else {
+                        unregister_code16(LCTL(KC_A));
+                        v_hold_active = false;
+                    }
+                }
+            }
+            return false;
+        case DUAL_FUNC_QUOT: // ' tap / " hold
             if (record->tap.count > 0) {
                 if (record->event.pressed) {
                     register_code16(KC_QUOTE);
