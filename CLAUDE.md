@@ -148,3 +148,46 @@ void feature_function(void) {
 ```
 
 The QMK codebase emphasizes modularity, hardware abstraction, and extensive customization while maintaining consistent build patterns across hundreds of keyboard variants.
+
+## Piantor Pro Keyboard
+
+### Keyboard Details
+- **Path**: `keyboards/beekeeb/piantor_pro`
+- **Controller**: RP2040
+- **Keymap**: `voyager_adapted`
+
+### Building
+```bash
+# Build the firmware
+qmk compile -kb beekeeb/piantor_pro -km voyager_adapted
+
+# Or using make
+make beekeeb/piantor_pro:voyager_adapted
+```
+
+### Flashing via Bootmagic (Recommended)
+
+The Piantor Pro has no physical BOOT button, but has `bootmagic: true` enabled:
+
+1. **Unplug** the keyboard
+2. **Hold the top-left key** (Tab/`MEH_T(KC_TAB)` in the voyager_adapted layout)
+3. **While holding**, plug in the USB cable
+4. **Release** the key
+5. Keyboard mounts as **RPI-RP2** drive
+6. **Copy the .uf2 file** to the drive:
+   ```bash
+   # After successful build, copy to mounted drive
+   cp beekeeb_piantor_pro_voyager_adapted.uf2 /Volumes/RPI-RP2/
+   ```
+
+### Alternative: QMK Flash Command
+```bash
+# Put keyboard in bootloader mode first (Bootmagic method above)
+# Then run:
+qmk flash -kb beekeeb/piantor_pro -km voyager_adapted
+```
+
+### Troubleshooting
+- **Keyboard not mounting**: Ensure you're holding the correct key (top-left, row 0, col 0)
+- **Wrong key**: Check your keymap - the top-left physical key triggers bootmagic regardless of what's mapped to it
+- **Still not working**: Try a different USB cable or port
