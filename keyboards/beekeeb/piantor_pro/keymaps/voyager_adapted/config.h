@@ -11,6 +11,9 @@
 #define TAPPING_TERM 250   // Hold activation threshold (community recommended: 200-250ms)
 #define QUICK_TAP_TERM 120 // Force tap if same key pressed within 120ms (prevents hold during fast double-taps)
 
+// Disable double-tap reset - can be triggered accidentally by electrical noise during fast typing
+#undef RP2040_BOOTLOADER_DOUBLE_TAP_RESET
+
 // Debounce configuration from Voyager
 #undef DEBOUNCE
 #define DEBOUNCE 30
