@@ -746,8 +746,14 @@ static void pointing_handlers_slave(matrix_row_t master_matrix[], matrix_row_t s
     }
 #    endif
 #    if (POINTING_DEVICE_TASK_THROTTLE_MS > 0)
+    // SLAVE_POINTING_THROTTLE_MULT: slave polls the sensor less often than the
+    // master task rate to avoid SPI/USART contention on the slave side.
+    // Vial-QMK defaults this to 5 (5ms slave poll at THROTTLE_MS=1).
+#       ifndef SLAVE_POINTING_THROTTLE_MULT
+#           define SLAVE_POINTING_THROTTLE_MULT 5
+#       endif
     static uint32_t last_exec = 0;
-    if (timer_elapsed32(last_exec) < POINTING_DEVICE_TASK_THROTTLE_MS) {
+    if (timer_elapsed32(last_exec) < (uint32_t)(POINTING_DEVICE_TASK_THROTTLE_MS * SLAVE_POINTING_THROTTLE_MULT)) {
         return;
     }
     last_exec = timer_read32();
