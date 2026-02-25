@@ -36,7 +36,7 @@
 #define DUAL_FUNC_EQL   LT(1, KC_EQUAL)  // = tap / + hold
 #define DUAL_FUNC_COMMA LT(1, KC_COMMA)  // , tap / - hold
 #define DUAL_FUNC_ASTR  LT(0, KC_F24)    // * tap / ! hold
-#define DUAL_FUNC_BTN   LT(0, MS_BTN1)  // left click tap / right click hold (LT thumb UpperOuter)
+#define DUAL_FUNC_BTN   LT(0, KC_F14)   // left click tap / right click hold (LT thumb UpperOuter)
 #define DUAL_FUNC_COPY  LT(0, KC_F13)   // Cmd+C tap / Cmd+V hold (RT thumb UpperOuter)
 
 // ---------------------------------------------------------------------------
@@ -65,10 +65,11 @@ const uint16_t PROGMEM keymaps[DYNAMIC_KEYMAP_LAYER_COUNT][MATRIX_ROWS][MATRIX_C
     //   L1: F(Gui)      R(Cmd+→)  G(⌥←)  V(^A)     MEH
     //
     // Right hand:
-    //   R1: J(Gui)  U(^)    '(")   M())   H(⌥→)
+    //   R1: J(Gui)  U(^)    =(+)   M())   H(⌥→)
     //   R2: K(Alt)  I($)    :      ,(-)   Y(0)
-    //   R3: L(%)    O([)    =(+)   .(`)   N(()
-    //   R4: ;(:)    P(])    [      /(\)   ]
+    //   R3: L(%)    O([)    —      .(`)   N(()
+    //   R4: ;(:)    P(])    '(")   /(\)   *(!)
+
     //
     // Thumbs:
     //   LT: TO(1) Down | BTN1/BTN2 UpperOuter | Shift/Bspc LowerOuter
@@ -76,9 +77,9 @@ const uint16_t PROGMEM keymaps[DYNAMIC_KEYMAP_LAYER_COUNT][MATRIX_ROWS][MATRIX_C
     // =========================================================================
     [0] = LAYOUT(
         /*          Center                North           East               South            West                Double */
-        /*R1*/      MT(MOD_RGUI,KC_J),    DUAL_FUNC_U,    KC_NO,             DUAL_FUNC_M,     DUAL_FUNC_H,        KC_NO,
+        /*R1*/      MT(MOD_RGUI,KC_J),    DUAL_FUNC_U,    DUAL_FUNC_EQL,     DUAL_FUNC_M,     DUAL_FUNC_H,        KC_NO,
         /*R2*/      MT(MOD_RALT,KC_K),    DUAL_FUNC_I,    KC_COLN,           DUAL_FUNC_COMMA, DUAL_FUNC_Y,        KC_NO,
-        /*R3*/      DUAL_FUNC_L,          DUAL_FUNC_O,    DUAL_FUNC_EQL,     DUAL_FUNC_DOT,   DUAL_FUNC_N,        KC_NO,
+        /*R3*/      DUAL_FUNC_L,          DUAL_FUNC_O,    KC_NO,             DUAL_FUNC_DOT,   DUAL_FUNC_N,        KC_NO,
         /*R4*/      DUAL_FUNC_SCLN,       DUAL_FUNC_P,    DUAL_FUNC_QUOT,    DUAL_FUNC_SLSH,  DUAL_FUNC_ASTR,     KC_NO,
         /*L1*/      MT(MOD_LGUI,KC_F),    DUAL_FUNC_R,    DUAL_FUNC_G,       DUAL_FUNC_V,     MEH_T(KC_TAB),      KC_NO,
         /*L2*/      MT(MOD_LALT,KC_D),    DUAL_FUNC_E,    DUAL_FUNC_T,       DUAL_FUNC_C,     KC_GRAVE,           KC_NO,
@@ -474,11 +475,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             return false;
         case DUAL_FUNC_BTN: // left click tap / right click hold
             if (record->tap.count > 0) {
-                if (record->event.pressed) { register_code(MS_BTN1); }
-                else { unregister_code(MS_BTN1); }
+                if (record->event.pressed) { register_code16(MS_BTN1); }
+                else { unregister_code16(MS_BTN1); }
             } else {
-                if (record->event.pressed) { register_code(MS_BTN2); }
-                else { unregister_code(MS_BTN2); }
+                if (record->event.pressed) { register_code16(MS_BTN2); }
+                else { unregister_code16(MS_BTN2); }
             }
             return false;
     }
