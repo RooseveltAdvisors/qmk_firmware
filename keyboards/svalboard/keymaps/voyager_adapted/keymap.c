@@ -487,26 +487,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 }
 
 // ---------------------------------------------------------------------------
-// CHORDAL_HOLD override: prevent letter dual-function keys from triggering
-// hold when followed by an opposite-hand key during fast typing (e.g., "bu",
-// "by", "no"). Without this, B(left) + U(right) within tapping window resolves
-// as & instead of B. Holds are still accessible via TAPPING_TERM alone.
-// ---------------------------------------------------------------------------
-bool get_chordal_hold(uint16_t tap_hold_keycode, keyrecord_t *tap_hold_record, uint16_t other_keycode, keyrecord_t *other_record) {
-    switch (tap_hold_keycode) {
-        case DUAL_FUNC_A: case DUAL_FUNC_S: case DUAL_FUNC_L: case DUAL_FUNC_SCLN:
-        case DUAL_FUNC_B: case DUAL_FUNC_N: case DUAL_FUNC_M: case DUAL_FUNC_X:
-        case DUAL_FUNC_DOT: case DUAL_FUNC_Z: case DUAL_FUNC_SLSH:
-        case DUAL_FUNC_Q: case DUAL_FUNC_W: case DUAL_FUNC_E: case DUAL_FUNC_R:
-        case DUAL_FUNC_T: case DUAL_FUNC_G: case DUAL_FUNC_H: case DUAL_FUNC_Y:
-        case DUAL_FUNC_U: case DUAL_FUNC_I: case DUAL_FUNC_O: case DUAL_FUNC_P:
-        case DUAL_FUNC_EQL: case DUAL_FUNC_COMMA:
-            return false;  // never chord-hold; use TAPPING_TERM for deliberate holds
-    }
-    return get_chordal_hold_default(tap_hold_record, other_record);
-}
-
-// ---------------------------------------------------------------------------
 // Exclude MEH_T and ALL_T keys from Flow Tap so they work as quick modifiers.
 // Without this, pressing MEH_T(KC_SPC) within 150ms of a previous alpha key
 // would force a tap (output space) instead of activating MEH.
