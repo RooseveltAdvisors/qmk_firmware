@@ -191,3 +191,37 @@ qmk flash -kb beekeeb/piantor_pro -km voyager_adapted
 - **Keyboard not mounting**: Ensure you're holding the correct key (top-left, row 0, col 0)
 - **Wrong key**: Check your keymap - the top-left physical key triggers bootmagic regardless of what's mapped to it
 - **Still not working**: Try a different USB cable or port
+
+## Svalboard Keyboard
+
+### Keyboard Details
+- **Path**: `keyboards/svalboard`
+- **Controller**: RP2040
+- **Keymap**: `voyager_adapted` (adapted from Piantor Pro)
+- **Split**: Yes — left and right halves must be flashed separately
+
+### Building
+```bash
+PATH="/opt/homebrew/opt/arm-none-eabi-gcc@8/bin:/opt/homebrew/opt/arm-none-eabi-binutils/bin:/opt/homebrew/bin:/usr/bin:/bin:/Users/jon/.local/bin" make svalboard/left:voyager_adapted svalboard/trackball/pmw3360/right:voyager_adapted
+```
+
+Output files:
+- `svalboard_left_voyager_adapted.uf2`
+- `svalboard_trackball_pmw3360_right_voyager_adapted.uf2`
+
+### Flashing (each half separately)
+
+1. **Unplug** the half you want to flash
+2. **Hold the reset button** on the PCB (small tactile button)
+3. **While holding**, plug in the USB cable to your Mac
+4. **Release** the button — keyboard mounts as **RPI-RP2** drive
+5. **Copy the correct .uf2 file**:
+   ```bash
+   # Left half:
+   cp svalboard_left_voyager_adapted.uf2 /Volumes/RPI-RP2/
+
+   # Right half:
+   cp svalboard_trackball_pmw3360_right_voyager_adapted.uf2 /Volumes/RPI-RP2/
+   ```
+
+Note: Double-tap reset does NOT work — must hold reset while plugging in.
