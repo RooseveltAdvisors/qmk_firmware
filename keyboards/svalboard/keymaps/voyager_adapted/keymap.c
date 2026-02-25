@@ -36,6 +36,7 @@
 #define DUAL_FUNC_EQL   LT(1, KC_EQUAL)  // = tap / + hold
 #define DUAL_FUNC_COMMA LT(1, KC_COMMA)  // , tap / - hold
 #define DUAL_FUNC_ASTR  LT(0, KC_F24)    // * tap / ! hold
+#define DUAL_FUNC_BTN   LT(0, MS_BTN1)  // left click tap / right click hold
 
 // ---------------------------------------------------------------------------
 // LAYOUT argument order:
@@ -68,9 +69,9 @@ const uint16_t PROGMEM keymaps[DYNAMIC_KEYMAP_LAYER_COUNT][MATRIX_ROWS][MATRIX_C
     //   R3: L(%)    O([)    =(+)   .(`)   N(()
     //   R4: ;(:)    P(])    [      /(\)   ]
     //
-    // Thumbs (mirroring Piantor Pro - 2 keys per side, all others disabled):
-    //   LT: TO(1) (Inner/Pad = center pad) | Shift/Bspc (UpperOuter = upper-east)
-    //   RT: MEH/Spc (Down) | Ctrl/Enter (UpperOuter = upper-west)
+    // Thumbs:
+    //   LT: TO(1) Down | BTN1/BTN2 UpperOuter | Shift/Bspc LowerOuter
+    //   RT: MEH/Spc Down | BTN1/BTN2 UpperOuter | Ctrl/Enter LowerOuter
     // =========================================================================
     [0] = LAYOUT(
         /*          Center                North           East               South            West                Double */
@@ -83,8 +84,8 @@ const uint16_t PROGMEM keymaps[DYNAMIC_KEYMAP_LAYER_COUNT][MATRIX_ROWS][MATRIX_C
         /*L3*/      DUAL_FUNC_S,          DUAL_FUNC_W,    DUAL_FUNC_B,       DUAL_FUNC_X,     KC_DELETE,          KC_NO,
         /*L4*/      DUAL_FUNC_A,          DUAL_FUNC_Q,    DUAL_FUNC_AT,      DUAL_FUNC_Z,     ALL_T(KC_ESC),      KC_NO,
         /*          Down                    Inner/Pad   Up      UpperOuter  LowerOuter              DoubleDown */
-        /*RT*/      MEH_T(KC_SPC),          KC_NO,      KC_NO,  KC_NO,      MT(MOD_RCTL,KC_ENT),    KC_NO,
-        /*LT*/      TO(1),                  KC_NO,      KC_NO,  KC_NO,      MT(MOD_LSFT,KC_BSPC),   KC_NO
+        /*RT*/      MEH_T(KC_SPC),          KC_NO,      KC_NO,  DUAL_FUNC_BTN, MT(MOD_RCTL,KC_ENT),    KC_NO,
+        /*LT*/      TO(1),                  KC_NO,      KC_NO,  DUAL_FUNC_BTN, MT(MOD_LSFT,KC_BSPC),   KC_NO
     ),
 
     // =========================================================================
@@ -459,6 +460,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             } else {
                 if (record->event.pressed) { register_code16(KC_EXLM); }
                 else { unregister_code16(KC_EXLM); }
+            }
+            return false;
+        case DUAL_FUNC_BTN: // left click tap / right click hold
+            if (record->tap.count > 0) {
+                if (record->event.pressed) { register_code(MS_BTN1); }
+                else { unregister_code(MS_BTN1); }
+            } else {
+                if (record->event.pressed) { register_code(MS_BTN2); }
+                else { unregister_code(MS_BTN2); }
             }
             return false;
     }
