@@ -5,7 +5,7 @@
 
 // PMW3360 sensor CPI (100-12000, step 100). Default is 1600.
 // 2000 gives snappier traversal while staying precise.
-#define PMW33XX_CPI 1200
+#define PMW33XX_CPI 800
 
 // Faster SPI clock: 125MHz / 32 = ~3.9MHz (PMW3360 max is 4MHz).
 // Default divisor is 64 (~1.95MHz). Halving the divisor halves SPI
